@@ -146,6 +146,136 @@ void medicineType::takeOrder()
 }
 }
 
+
+void medicineType::orderList()		
+{
+	int i, num, num2;	
+	bool found;			
+	system("cls");
+	node *temp;
+
+	temp=startPtr;
+	found = false;
+	
+	std::cout<<" Enter the Reciept Number To Print The Reciept\n";
+	std::cin>>num2;
+	std::cout<<"\n";
+	std::cout<<"***************************************************************************"<<endl;
+	std::cout <<"\t\tHere is the Order list\n"; 
+	std::cout<<"***************************************************************************"<<endl;
+
+
+	if(temp == NULL) 
+	{
+		std::cout << "\tThere is no Order to show\n\t\t\tSo The List is Empty\n\n\n";
+	}
+	while(temp !=NULL && !found)
+	{
+		if (temp->recieptNumber==num2)
+		{
+			found = true;
+		}
+		else
+		{
+			temp = temp -> next;
+		}
+        if (found)	
+        {
+		std::cout <<"Reciept Number : "<<temp->recieptNumber;
+		std::cout <<"\n";
+		std::cout<<"Customer Name: "<<temp->customerName<<endl;
+				
+		std::cout<<"Order Date : "<<temp->date<<endl;
+				
+		std::cout<<"_____________________________________________________________________________"<<endl;
+			
+		std::cout << "===============================================================================" << endl;
+		std::cout << "|  Medicine Type |     Medicine Name    |  	Quantity     |    Total Price |" << endl;
+		std::cout << "=======++==================++================++===============++===============" << endl;
+		for (i=0;i<temp->x;i++)
+		{
+			std::cout << temp->type <<"  \t\t";
+			std::cout<<temp->medicineName[temp->menu2[i]-1]<<"\t\t\t  ";
+			std::cout<<temp->quantity[i] <<"\t\t";
+			std::cout<< temp->amount[i]<<"Rs "<<endl;
+			std::cout<<"_________________________________________________________________________________"<<endl;
+		}
+		
+		temp->total = temp->amount[0]+temp->amount[1]+temp->amount[2]+temp->amount[3]+temp->amount[4]+temp->amount[5]+temp->amount[6]+temp->amount[7]
+						+temp->amount[8]+temp->amount[9];
+		std::cout<<"Total Bill is : "<<temp->total;
+		std::cout<<"\n";
+		std::cout << "Type the exact amount You need to pay: ";
+        std::cin >> num;
+
+		std::cout <<"\n";
+		std::cout <<"\n";
+		std::cout<<"Payment Done\nThank You\n";
+		std::cout <<"\n_______________________________________________________________________________\n";
+		}
+
+
+}
+}	
+
+
+void medicineType::deleteOrder()	
+{
+	system("cls");
+	int i, num, count;
+    std::cout<<"Enter the data you want to delete \n";
+    std::cin>>num;
+    node *q;
+	node *temp;
+	bool found;
+
+	if(startPtr == NULL)
+		cerr<<"Can not delete from an empty list.\n";
+	else
+	{
+		if(startPtr->recieptNumber == num)
+		{
+			q = startPtr;
+			startPtr = startPtr->next;
+			count--;
+			if(startPtr == NULL)
+			last = NULL;
+			delete q;
+			std::cout<<"The Reciept was Deleted Successfully"<<endl;
+		}
+		else
+		{
+			found = false;
+			temp = startPtr;
+			q = startPtr->next;
+	
+		while((!found) && (q != NULL))
+		{
+  			if(q->recieptNumber != num) 
+			{
+				temp = q;
+				q = q-> next;
+			}
+			else
+				found = true;
+		}
+
+			if(found)
+			{
+				temp->next = q->next;
+				count--;
+
+				if(last == q) 
+				last = temp;
+				delete q;
+				std::cout<<"The Reciept was Deleted Successfully"<<endl;
+			}
+			else
+				std::cout<<"The item to be deleted is not found in the list."<<endl;
+			}
+		} 
+}	
+
 void medicineType::modify()	{
  system("cls");
  int i, ch, sid;
